@@ -388,7 +388,7 @@ export default function Home() {
           <div className="card-line" />
           <h2>Hair Syndet Bar</h2>
           <p>A herbal cleansing ritual crafted with botanical extracts. Gentle on scalp, powerful in purification.</p>
-          <a href="/products" className="card-link" data-testid="link-discover-hair">Discover &rarr;</a>
+          <a href="/products" onClick={navTo("/products")} className="card-link" data-testid="link-discover-hair">Discover &rarr;</a>
         </div>
       </section>
 
@@ -403,7 +403,7 @@ export default function Home() {
           <div className="card-line" />
           <h2>Body Syndet Bar</h2>
           <p>Pure spa-grade cleansing experience. Silken formulation that nourishes while it cleanses.</p>
-          <a href="/products" className="card-link" data-testid="link-discover-body">Discover &rarr;</a>
+          <a href="/products" onClick={navTo("/products")} className="card-link" data-testid="link-discover-body">Discover &rarr;</a>
         </div>
       </section>
 
@@ -418,7 +418,7 @@ export default function Home() {
           <div className="card-line" />
           <h2>Face Syndet Bar</h2>
           <p>Precision skin cleansing for the discerning. Clean cosmetic formulation at its finest.</p>
-          <a href="/products" className="card-link" data-testid="link-discover-face">Discover &rarr;</a>
+          <a href="/products" onClick={navTo("/products")} className="card-link" data-testid="link-discover-face">Discover &rarr;</a>
         </div>
       </section>
 
