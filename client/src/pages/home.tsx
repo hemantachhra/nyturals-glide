@@ -1,8 +1,16 @@
 import { useEffect } from "react";
+import { useLocation } from "wouter";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
+
+  const navTo = (path: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setLocation(path);
+    window.scrollTo(0, 0);
+  };
   useEffect(() => {
     let autoRunning = false;
     let direction = 1;
@@ -441,19 +449,19 @@ export default function Home() {
               Where Would You Like to Go?
             </h2>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12, maxWidth: 600, margin: "0 auto" }}>
-              <a href="/products" className="btn-gold" data-testid="link-explore-products" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", background: "#d4b06a", color: "#1a1610" }}>
+              <a href="/products" onClick={navTo("/products")} className="btn-gold" data-testid="link-explore-products" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", background: "#d4b06a", color: "#1a1610", cursor: "pointer" }}>
                 Explore Products
               </a>
-              <a href="/contact#contact-form" data-testid="link-send-message" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+              <a href="/contact" onClick={navTo("/contact")} data-testid="link-send-message" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent", cursor: "pointer" }}>
                 Send Message
               </a>
-              <a href="/about" data-testid="link-nav-about-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+              <a href="/about" onClick={navTo("/about")} data-testid="link-nav-about-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent", cursor: "pointer" }}>
                 About Us
               </a>
-              <a href="/product-list" data-testid="link-nav-productlist-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+              <a href="/product-list" onClick={navTo("/product-list")} data-testid="link-nav-productlist-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent", cursor: "pointer" }}>
                 Product List
               </a>
-              <a href="/products" data-testid="link-nav-products-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+              <a href="/products" onClick={navTo("/products")} data-testid="link-nav-products-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent", cursor: "pointer" }}>
                 Products
               </a>
             </div>
