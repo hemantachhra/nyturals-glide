@@ -7,7 +7,7 @@ import { sendContactEmail } from "./gmail";
 
 export async function registerRoutes(
   httpServer: Server,
-  app: Express
+  app: Express,
 ): Promise<Server> {
   app.get("/api/download-source", (_req, res) => {
     const filePath = path.resolve("client/public/glamour-site-source.tar.gz");
@@ -18,7 +18,9 @@ export async function registerRoutes(
     try {
       const parsed = insertContactMessageSchema.safeParse(req.body);
       if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid form data", details: parsed.error.issues });
+        return res
+          .status(400)
+          .json({ error: "Invalid form data", details: parsed.error.issues });
       }
 
       const message = await storage.createContactMessage(parsed.data);
@@ -35,7 +37,9 @@ export async function registerRoutes(
       });
     } catch (error: any) {
       console.error("Contact form error:", error);
-      return res.status(500).json({ error: "Failed to process your message. Please try again." });
+      return res
+        .status(500)
+        .json({ error: "Failed to process your message. Please try again." });
     }
   });
 
