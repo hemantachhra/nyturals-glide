@@ -50,7 +50,7 @@ export function Footer() {
                 key={link.href}
                 href={link.href}
                 data-testid={`link-footer-${link.label.toLowerCase().replace(" ", "-")}`}
-                onClick={(e) => { e.preventDefault(); setLocation(link.href); }}
+                onClick={(e) => { e.preventDefault(); setLocation(link.href); window.scrollTo(0, 0); }}
                 style={{ color: "#888", fontSize: 13, textDecoration: "none", transition: "color 0.3s", padding: "3px 0" }}
                 onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "#D4B06A"; }}
                 onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "#888"; }}
