@@ -37,9 +37,30 @@ export default function Home() {
     function handleScroll() {
       const scrolled = window.scrollY;
       document.querySelectorAll<HTMLElement>(".glide").forEach(function (el) {
-        const speed = 0.15;
-        el.style.transform = "translateY(" + scrolled * -speed + "px)";
+        const section = el.closest(".nyturals-section") as HTMLElement;
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        const viewH = window.innerHeight;
+        const sectionProgress = -rect.top / (section.offsetHeight - viewH);
+        const clampedProgress = Math.max(0, Math.min(1, sectionProgress));
+        const travel = viewH * 0.6;
+        const offset = (0.5 - clampedProgress) * travel;
+        el.style.transform = "translateY(" + offset + "px)";
       });
+
+      const navCard = document.querySelector<HTMLElement>(".glide-nav");
+      if (navCard) {
+        const wrapper = navCard.closest("[data-testid='plants-bg-wrapper']") as HTMLElement;
+        if (wrapper) {
+          const rect = wrapper.getBoundingClientRect();
+          const viewH = window.innerHeight;
+          const sectionProgress = -rect.top / (wrapper.offsetHeight - viewH);
+          const clampedProgress = Math.max(0, Math.min(1, sectionProgress));
+          const travel = viewH * 1.4;
+          const offset = (0.9 - clampedProgress) * travel;
+          navCard.style.transform = "translateY(" + offset + "px)";
+        }
+      }
 
       const plantsEl = document.getElementById("plants-bg-image");
       if (plantsEl) {
@@ -210,7 +231,7 @@ export default function Home() {
         }
 
         .nyturals-section {
-          height: 160vh;
+          height: 180vh;
           position: relative;
           display: flex;
           align-items: center;
@@ -228,7 +249,7 @@ export default function Home() {
         }
 
         .nyturals-card {
-          background: rgba(18, 15, 10, 0.72);
+          background: rgba(18, 15, 10, 0.05);
           padding: 44px 40px;
           max-width: 400px;
           backdrop-filter: blur(12px);
@@ -247,15 +268,16 @@ export default function Home() {
 
         .nyturals-card h2 {
           font-family: Playfair Display, serif;
-          color: #e8c87a;
+          color: #fff;
           margin: 0;
           font-size: 30px;
           font-weight: 600;
-          text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+          text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.5);
         }
 
         .nyturals-card p {
-          color: #a8a29a;
+          color: #e8e0d4;
+          text-shadow: 0 1px 6px rgba(0,0,0,0.5);
           line-height: 1.7;
           margin-top: 12px;
           font-size: 15px;
@@ -270,6 +292,7 @@ export default function Home() {
           margin-top: 18px;
           display: inline-block;
           transition: opacity 0.3s;
+          text-shadow: 0 1px 6px rgba(0,0,0,0.5);
         }
         .nyturals-card .card-link:hover {
           opacity: 0.7;
@@ -378,7 +401,7 @@ export default function Home() {
 
       <div className="gold-separator" />
 
-      <section className="nyturals-section" data-testid="section-face">
+      <section className="nyturals-section" data-testid="section-face" style={{ height: "220vh" }}>
         <div
           className="nyturals-section-bg"
           style={{ backgroundImage: "url('/images/face.jpg')" }}
@@ -391,47 +414,54 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="plants-bg-wrapper" data-testid="plants-bg-wrapper">
+      <div className="plants-bg-wrapper" data-testid="plants-bg-wrapper" style={{ position: "relative" }}>
         <div className="plants-bg-image" id="plants-bg-image" />
         <div className="plants-bg-overlay" />
 
-        <section
-          data-testid="section-navigate"
-          style={{
-            position: "relative",
-            zIndex: 2,
-            padding: "80px 40px",
-            textAlign: "center",
-          }}
-        >
-          <div style={{ width: 36, height: 1, background: "#d4b06a", margin: "0 auto 24px" }} />
-          <p style={{ color: "#d4b06a", fontSize: 11, letterSpacing: "4px", textTransform: "uppercase", marginBottom: 12, fontFamily: "Inter, sans-serif" }}>
-            Explore More
-          </p>
-          <h2 style={{ fontFamily: "Playfair Display, serif", color: "#e8c87a", fontSize: 28, fontWeight: 600, margin: "0 0 40px" }}>
-            Where Would You Like to Go?
-          </h2>
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 14, maxWidth: 700, margin: "0 auto" }}>
-            <a href="/products" className="btn-gold" data-testid="link-explore-products" style={{ display: "inline-block", padding: "14px 34px", fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", background: "#d4b06a", color: "#1a1610" }}>
-              Explore Products
-            </a>
-            <a href="/contact#contact-form" data-testid="link-send-message" style={{ display: "inline-block", padding: "14px 34px", fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
-              Send Message
-            </a>
-            <a href="/about" data-testid="link-nav-about-bottom" style={{ display: "inline-block", padding: "14px 34px", fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
-              About Us
-            </a>
-            <a href="/product-list" data-testid="link-nav-productlist-bottom" style={{ display: "inline-block", padding: "14px 34px", fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
-              Product List
-            </a>
-            <a href="/products" data-testid="link-nav-products-bottom" style={{ display: "inline-block", padding: "14px 34px", fontFamily: "Inter, sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
-              Products
-            </a>
+        <div style={{ position: "relative", zIndex: 2, minHeight: "220vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", paddingBottom: 0 }}>
+         <div className="glide-nav" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <section
+            data-testid="section-navigate"
+            style={{
+              maxWidth: 580,
+              width: "90%",
+              padding: "44px 36px",
+              textAlign: "center",
+              background: "rgba(18, 15, 10, 0.05)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(212,176,106,0.12)",
+            }}
+          >
+            <div style={{ width: 36, height: 1, background: "#d4b06a", margin: "0 auto 20px" }} />
+            <p style={{ color: "#d4b06a", fontSize: 11, letterSpacing: "4px", textTransform: "uppercase", marginBottom: 10, fontFamily: "Inter, sans-serif" }}>
+              Explore More
+            </p>
+            <h2 style={{ fontFamily: "Playfair Display, serif", color: "#e8c87a", fontSize: 26, fontWeight: 600, margin: "0 0 30px" }}>
+              Where Would You Like to Go?
+            </h2>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12, maxWidth: 600, margin: "0 auto" }}>
+              <a href="/products" className="btn-gold" data-testid="link-explore-products" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", background: "#d4b06a", color: "#1a1610" }}>
+                Explore Products
+              </a>
+              <a href="/contact#contact-form" data-testid="link-send-message" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+                Send Message
+              </a>
+              <a href="/about" data-testid="link-nav-about-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+                About Us
+              </a>
+              <a href="/product-list" data-testid="link-nav-productlist-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+                Product List
+              </a>
+              <a href="/products" data-testid="link-nav-products-bottom" style={{ display: "inline-block", padding: "12px 28px", fontFamily: "Inter, sans-serif", fontSize: 11, fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", textDecoration: "none", transition: "all 0.3s ease", border: "1px solid rgba(212,176,106,0.5)", color: "#e8c87a", background: "transparent" }}>
+                Products
+              </a>
+            </div>
+          </section>
+          <div style={{ width: "100%" }}>
+            <Footer />
           </div>
-        </section>
-
-        <div style={{ position: "relative", zIndex: 2 }}>
-          <Footer />
+         </div>
         </div>
       </div>
     </>
